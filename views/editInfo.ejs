@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="/css/edit.css" />
+</head>
+<body>
+    <div class="container">
+      <div class="toggle-theme">
+        <label for="darkMode">🌙 Dark Mode</label>
+        <input type="checkbox" id="darkMode">
+      </div>
+
+      <h1>Edit Your Information</h1>
+  
+      <% if (typeof error !== 'undefined') { %>
+        <div class="alert error-alert"><%= error %></div>
+      <% } %>
+  
+      <% if (typeof success !== 'undefined') { %>
+        <div class="alert success-alert"><%= success %></div>
+      <% } %>
+    
+    <form class="edit-form" id="editForm" action="/edit-profile" method="POST" enctype="multipart/form-data">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" name="fullName" value="<%= student.fullName %>" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="<%= student.email %>" required>
+
+      <label for="phone">Phone No.</label>
+      <input type="tel" id="phone" name="phone" value="<%= student.phone %>" required>
+
+      <label for="gender">Gender:</label>
+      <select name="gender" id="gender" required>
+        <option value="">Select</option>
+        <option value="Male" <%= student.gender === 'Male' ? 'selected' : '' %>>Male</option>
+        <option value="Female" <%= student.gender === 'Female' ? 'selected' : '' %>>Female</option>
+        <option value="Other" <%= student.gender === 'Other' ? 'selected' : '' %>>Other</option>
+      </select>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" value=<%= student.dob %> required>
+
+      <label for="department">Department</label>
+      <select name="department" id="department" required>
+        <option value="">Select Department</option>
+        <option value="Computer Science" <%= student.department === 'Computer Science' ? 'selected' : '' %>>Computer Science</option>
+        <option value="Mathematics" <%= student.department === 'Mathematics' ? 'selected' : '' %>>Mathematics</option>
+        <option value="Physics" <%= student.department === 'Physics' ? 'selected' : '' %>>Physics</option>
+        <option value="Other" <%= student.department === 'Other' ? 'selected' : '' %>>Other</option>
+      </select>
+
+      <% if (student.profilePic) { %>
+        <p>Current Picture:</p>
+        <img src="/uploads/<%= student.profilePic %>" class="profile-pic" alt="Profile Picture">
+      <% } %>
+
+      <label for="profilePic">Upload New Picture:</label>
+      <input type="file" id="profilePic" name="profilePic">
+
+        <!-- New image preview -->
+        <img id="newPreview" class="profile-pic" style="display:none;">
+
+      <button type="submit">Update</button>
+    </form>
+
+    <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+    <script>
+      // Client-side validation
+      document.getElementById('editForm').addEventListener('submit', function (e) {
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+  
+        if (fullName === '' || !email.includes('@')) {
+          alert('Please enter a valid name and email.');
+          e.preventDefault();
+        }
+      });
+  
+      // Image preview on file upload
+      document.getElementById('profilePic').addEventListener('change', function () {
+        const file = this.files[0];
+        const preview = document.getElementById('newPreview');
+        if (file) {
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = 'block';
+        } else {
+          preview.src = '';
+          preview.style.display = 'none';
+        }
+      });
+  
+      // Dark mode toggle with localStorage
+      const toggle = document.getElementById('darkMode');
+      const body = document.body;
+  
+      // Set dark mode if remembered
+      if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark');
+        toggle.checked = true;
+      }
+  
+      toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+          body.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          body.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>
+
+

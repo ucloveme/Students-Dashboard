@@ -1,0 +1,15 @@
+{
+  "name": "students-dashboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "jenny",
+  "license": "ISC",
+  "description": ""
+}

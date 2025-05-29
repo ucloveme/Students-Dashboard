@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome! Please Register</h1>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div class="alert error-alert"><%= error %></div>
+    <% } %>
+
+    <% if (typeof success !== 'undefined') { %>
+      <div class="alert success-alert"><%= success %></div>
+    <% } %>
+
+    <form action="/register/user" method="post" enctype="multipart/form-data">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="fullName" value="<%= typeof old !== 'undefined' ? old.fullName : '' %>" required><br><br>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="<%= typeof old !== 'undefined' ? old.email : '' %>" required><br><br>
+
+      <label for="phone">Phone No.</label>
+      <input type="tel" id="phone" name="phone" value="<%= typeof old !== 'undefined' ? old.phone : '' %>" required><br><br>
+
+      <label for="gender">Gender:</label>
+      <select name="gender" id="gender" required>
+        <option value="">Select</option>
+        <option value="Male" <%= typeof old !== 'undefined' && old.gender === 'Male' ? 'selected' : '' %>>Male</option>
+        <option value="Female" <%= typeof old !== 'undefined' && old.gender === 'Female' ? 'selected' : '' %>>Female</option>
+        <option value="Other" <%= typeof old !== 'undefined' && old.gender === 'Other' ? 'selected' : '' %>>Other</option>
+      </select><br><br>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" value="<%= typeof old !== 'undefined' ? old.dob : '' %>" required><br><br>
+
+      <label for="department">Department</label>
+      <select name="department" id="department" required>
+        <option value="">Select Department</option>
+        <option value="Computer Science" <%= typeof old !== 'undefined' && old.department === 'Computer Science' ? 'selected' : '' %>>Computer Science</option>
+        <option value="Mathematics" <%= typeof old !== 'undefined' && old.department === 'Mathematics' ? 'selected' : '' %>>Mathematics</option>
+        <option value="Physics" <%= typeof old !== 'undefined' && old.department === 'Physics' ? 'selected' : '' %>>Physics</option>
+        <option value="Other" <%= typeof old !== 'undefined' && old.department === 'Other' ? 'selected' : '' %>>Other</option>
+      </select><br><br>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required><br><br>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+      <label for="profilePic">Profile Picture:</label>
+      <input type="file" name="profilePic" id="profilePic" accept="image/*"><br><br>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+</html>
